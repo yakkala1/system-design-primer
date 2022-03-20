@@ -832,15 +832,15 @@ Generally, you should try to avoid file-based caching, as it makes cloning and a
 
 Whenever you query the database, hash the query as a key and store the result to the cache.  This approach suffers from expiration issues:
 
-* Hard to delete a cached result with complex queries
-* If one piece of data changes such as a table cell, you need to delete all cached queries that might include the changed cell
+* <u>**Hard to delete a cached result with complex queries**</u>
+* <u>**If one piece of data changes such as a table cell, you need to delete all cached queries that might include the changed cell**</u>
 
 ### Caching at the object level
 
 See your data as an object, similar to what you do with your application code.  Have your application assemble the dataset from the database into a class instance or a data structure(s):
 
 * Remove the object from cache if its underlying data has changed
-* Allows for asynchronous processing: workers assemble objects by consuming the latest cached object
+* <u>**Allows for asynchronous processing: workers assemble objects by consuming the latest cached object**</u>
 
 Suggestions of what to cache:
 
@@ -851,8 +851,8 @@ Suggestions of what to cache:
 
 ### When to update the cache
 
-Since you can only store a limited amount of data in cache, you'll need to determine which cache update strategy works best for your use case.
-
+<u>**Since you can only store a limited amount of data in cache, you'll need to determine which cache update strategy works best for your use case.**</u>
+  
 #### Cache-aside
 
 <p align="center">
@@ -1065,11 +1065,11 @@ TCP is a connection-oriented protocol over an [IP network](https://en.wikipedia.
 * Sequence numbers and [checksum fields](https://en.wikipedia.org/wiki/Transmission_Control_Protocol#Checksum_computation) for each packet
 * [Acknowledgement](https://en.wikipedia.org/wiki/Acknowledgement_(data_networks)) packets and automatic retransmission
 
-If the sender does not receive a correct response, it will resend the packets.  If there are multiple timeouts, the connection is dropped.  TCP also implements [flow control](https://en.wikipedia.org/wiki/Flow_control_(data)) and [congestion control](https://en.wikipedia.org/wiki/Network_congestion#Congestion_control).  These guarantees cause delays and generally result in less efficient transmission than UDP.
+If the sender does not receive a correct response, it will resend the packets.  If there are multiple timeouts, the connection is dropped.  TCP also implements <u>**[flow control](https://en.wikipedia.org/wiki/Flow_control_(data)) and [congestion control](https://en.wikipedia.org/wiki/Network_congestion#Congestion_control)**</u>.  These guarantees cause delays and generally result in less efficient transmission than UDP.
 
-To ensure high throughput, web servers can keep a large number of TCP connections open, resulting in high memory usage.  It can be expensive to have a large number of open connections between web server threads and say, a [memcached](https://memcached.org/) server.  [Connection pooling](https://en.wikipedia.org/wiki/Connection_pool) can help in addition to switching to UDP where applicable.
+To ensure high throughput, web servers can keep a large number of TCP connections open, resulting in high memory usage. <u>**It can be expensive to have a large number of open connections between web server threads and say, a [memcached](https://memcached.org/) server.  [Connection pooling](https://en.wikipedia.org/wiki/Connection_pool) can help in addition to switching to UDP where applicable.**</u>
 
-TCP is useful for applications that require high reliability but are less time critical.  Some examples include web servers, database info, SMTP, FTP, and SSH.
+<u>**TCP is useful for applications that require high reliability but are less time critical.  Some examples include web servers, database info, SMTP, FTP, and SSH.**</u>
 
 Use TCP over UDP when:
 
