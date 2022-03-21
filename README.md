@@ -481,7 +481,7 @@ There are many techniques to scale a relational database: **master-slave replica
 
 #### Master-slave replication
 
-The master serves reads and writes, replicating writes to one or more slaves, which serve only reads.  Slaves can also replicate to additional slaves in a tree-like fashion.  If the master goes offline, the system can continue to operate in read-only mode until a slave is promoted to a master or a new master is provisioned.
+The master serves reads and writes, replicating writes to one or more slaves, which serve only reads. <ins>Slaves can also replicate to additional slaves in a tree-like fashion.</ins>  If the master goes offline, the system can continue to operate in read-only mode until a slave is promoted to a master or a new master is provisioned.
 
 <p align="center">
   <img src="images/C9ioGtn.png">
@@ -579,7 +579,7 @@ Denormalization attempts to improve read performance at the expense of some writ
 
 Once data becomes distributed with techniques such as [federation](#federation) and [sharding](#sharding), managing joins across data centers further increases complexity.  Denormalization might circumvent the need for such complex joins.
 
-In most systems, reads can heavily outnumber writes 100:1 or even 1000:1.  A read resulting in a complex database join can be very expensive, spending a significant amount of time on disk operations.
+<ins>In most systems, reads can heavily outnumber writes 100:1 or even 1000:1.  A read resulting in a complex database join can be very expensive, spending a significant amount of time on disk operations.</ins>
 
 ##### Disadvantage(s): denormalization
 
@@ -832,15 +832,15 @@ Generally, you should try to avoid file-based caching, as it makes cloning and a
 
 Whenever you query the database, hash the query as a key and store the result to the cache.  This approach suffers from expiration issues:
 
-* <u>**Hard to delete a cached result with complex queries**</u>
-* <u>**If one piece of data changes such as a table cell, you need to delete all cached queries that might include the changed cell**</u>
+* <ins>Hard to delete a cached result with complex queries</ins>
+* <ins>If one piece of data changes such as a table cell, you need to delete all cached queries that might include the changed cell</ins>
 
 ### Caching at the object level
 
 See your data as an object, similar to what you do with your application code.  Have your application assemble the dataset from the database into a class instance or a data structure(s):
 
 * Remove the object from cache if its underlying data has changed
-* <u>**Allows for asynchronous processing: workers assemble objects by consuming the latest cached object**</u>
+* <ins>Allows for asynchronous processing: workers assemble objects by consuming the latest cached object</ins>
 
 Suggestions of what to cache:
 
@@ -851,7 +851,7 @@ Suggestions of what to cache:
 
 ### When to update the cache
 
-<u>**Since you can only store a limited amount of data in cache, you'll need to determine which cache update strategy works best for your use case.**</u>
+<ins>Since you can only store a limited amount of data in cache, you'll need to determine which cache update strategy works best for your use case.</ins>
   
 #### Cache-aside
 
@@ -1065,11 +1065,11 @@ TCP is a connection-oriented protocol over an [IP network](https://en.wikipedia.
 * Sequence numbers and [checksum fields](https://en.wikipedia.org/wiki/Transmission_Control_Protocol#Checksum_computation) for each packet
 * [Acknowledgement](https://en.wikipedia.org/wiki/Acknowledgement_(data_networks)) packets and automatic retransmission
 
-If the sender does not receive a correct response, it will resend the packets.  If there are multiple timeouts, the connection is dropped.  TCP also implements <u>**[flow control](https://en.wikipedia.org/wiki/Flow_control_(data)) and [congestion control](https://en.wikipedia.org/wiki/Network_congestion#Congestion_control)**</u>.  These guarantees cause delays and generally result in less efficient transmission than UDP.
+If the sender does not receive a correct response, it will resend the packets.  If there are multiple timeouts, the connection is dropped.  TCP also implements <ins>[flow control](https://en.wikipedia.org/wiki/Flow_control_(data)) and [congestion control](https://en.wikipedia.org/wiki/Network_congestion#Congestion_control)</ins>.  These guarantees cause delays and generally result in less efficient transmission than UDP.
 
-To ensure high throughput, web servers can keep a large number of TCP connections open, resulting in high memory usage. <u>**It can be expensive to have a large number of open connections between web server threads and say, a [memcached](https://memcached.org/) server.  [Connection pooling](https://en.wikipedia.org/wiki/Connection_pool) can help in addition to switching to UDP where applicable.**</u>
+To ensure high throughput, web servers can keep a large number of TCP connections open, resulting in high memory usage. <ins>It can be expensive to have a large number of open connections between web server threads and say, a [memcached](https://memcached.org/) server.  [Connection pooling](https://en.wikipedia.org/wiki/Connection_pool) can help in addition to switching to UDP where applicable.</ins>
 
-<u>**TCP is useful for applications that require high reliability but are less time critical.  Some examples include web servers, database info, SMTP, FTP, and SSH.**</u>
+<ins>TCP is useful for applications that require high reliability but are less time critical.  Some examples include web servers, database info, SMTP, FTP, and SSH.</ins>
 
 Use TCP over UDP when:
 
@@ -1086,7 +1086,7 @@ Use TCP over UDP when:
 
 UDP is connectionless.  Datagrams (analogous to packets) are guaranteed only at the datagram level.  Datagrams might reach their destination out of order or not at all.  UDP does not support congestion control.  Without the guarantees that TCP support, UDP is generally more efficient.
 
-UDP can broadcast, sending datagrams to all devices on the subnet.  This is useful with [DHCP](https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol) because the client has not yet received an IP address, thus preventing a way for TCP to stream without the IP address.
+<ins>UDP can broadcast, sending datagrams to all devices on the subnet.  This is useful with [DHCP](https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol) because the client has not yet received an IP address, thus preventing a way for TCP to stream without the IP address.</ins>
 
 UDP is less reliable but works well in real time use cases such as VoIP, video chat, streaming, and realtime multiplayer games.
 
@@ -1113,7 +1113,7 @@ Use UDP over TCP when:
   <i><a href=http://www.puncsky.com/blog/2016-02-13-crack-the-system-design-interview>Source: Crack the system design interview</a></i>
 </p>
 
-In an RPC, a client causes a procedure to execute on a different address space, usually a remote server.  The procedure is coded as if it were a local procedure call, abstracting away the details of how to communicate with the server from the client program.  Remote calls are usually slower and less reliable than local calls so it is helpful to distinguish RPC calls from local calls.  Popular RPC frameworks include [Protobuf](https://developers.google.com/protocol-buffers/), [Thrift](https://thrift.apache.org/), and [Avro](https://avro.apache.org/docs/current/).
+In an RPC, a client causes a procedure to execute on a different address space, usually a remote server.  The procedure is coded as if it were a local procedure call, abstracting away the details of how to communicate with the server from the client program.  Remote calls are usually slower and less reliable than local calls so it is helpful to distinguish RPC calls from local calls.  Popular RPC frameworks include <ins>[Protobuf](https://developers.google.com/protocol-buffers/), [Thrift](https://thrift.apache.org/), and [Avro](https://avro.apache.org/docs/current/).</ins>
 
 RPC is a request-response protocol:
 
@@ -1135,7 +1135,7 @@ POST /anotheroperation
   "anotherdata": "another value"
 }
 ```
-
+<ins>
 RPC is focused on exposing behaviors.  RPCs are often used for performance reasons with internal communications, as you can hand-craft native calls to better fit your use cases.
 
 Choose a native library (aka SDK) when:
@@ -1153,6 +1153,7 @@ HTTP APIs following **REST** tend to be used more often for public APIs.
 * A new API must be defined for every new operation or use case.
 * It can be difficult to debug RPC.
 * You might not be able to leverage existing technologies out of the box.  For example, it might require additional effort to ensure [RPC calls are properly cached](http://etherealbits.com/2012/12/debunking-the-myths-of-rpc-rest/) on caching servers such as [Squid](http://www.squid-cache.org/).
+</ins>
 
 ### Representational state transfer (REST)
 
