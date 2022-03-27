@@ -474,10 +474,11 @@ A relational database like SQL is a collection of data items organized in tables
 
 **ACID** is a set of properties of relational database [transactions](https://en.wikipedia.org/wiki/Database_transaction).
 
-* **Atomicity** - Each transaction is all or nothing
-* **Consistency** - Any transaction will bring the database from one valid state to another
-* **Isolation** - Executing transactions concurrently has the same results as if the transactions were executed serially
-* **Durability** - Once a transaction has been committed, it will remain so
+* <ins>**Atomicity**</ins> - Each transaction is all or nothing
+* <ins>**Consistency**</ins> - Any transaction will bring the database from one valid state to another
+* <ins>**Isolation**</ins
+> - Executing transactions concurrently has the same results as if the transactions were executed serially
+* <ins>**Durability**</ins> - Once a transaction has been committed, it will remain so
 
 There are many techniques to scale a relational database: **master-slave replication**, **master-master replication**, **federation**, **sharding**, **denormalization**, and **SQL tuning**.
 
@@ -518,7 +519,7 @@ Both masters serve reads and writes and coordinate with each other on writes.  I
 * There is a potential for loss of data if the master fails before any newly written data can be replicated to other nodes.
 * Writes are replayed to the read replicas.  If there are a lot of writes, the read replicas can get bogged down with replaying writes and can't do as many reads.
 * The more read slaves, the more you have to replicate, which leads to greater replication lag.
-* On some systems, writing to the master can spawn multiple threads to write in parallel, whereas read replicas only support writing sequentially with a single thread.
+* <ins>On some systems, writing to the master can spawn multiple threads to write in parallel, whereas read replicas only support writing sequentially with a single thread.</ins>
 * Replication adds more hardware and additional complexity.
 
 ##### Source(s) and further reading: replication
