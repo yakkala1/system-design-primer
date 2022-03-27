@@ -1084,9 +1084,9 @@ TCP is a connection-oriented protocol over an [IP network](https://en.wikipedia.
 * Sequence numbers and [checksum fields](https://en.wikipedia.org/wiki/Transmission_Control_Protocol#Checksum_computation) for each packet
 * [Acknowledgement](https://en.wikipedia.org/wiki/Acknowledgement_(data_networks)) packets and automatic retransmission
 
-If the sender does not receive a correct response, it will resend the packets.  If there are multiple timeouts, the connection is dropped.  TCP also implements <ins>[flow control](https://en.wikipedia.org/wiki/Flow_control_(data)) and [congestion control](https://en.wikipedia.org/wiki/Network_congestion#Congestion_control)</ins>.  These guarantees cause delays and generally result in less efficient transmission than UDP.
+If the sender does not receive a correct response, it will resend the packets.  If there are multiple timeouts, the connection is dropped.  TCP also implements `[flow control](https://en.wikipedia.org/wiki/Flow_control_(data)) and [congestion control](https://en.wikipedia.org/wiki/Network_congestion#Congestion_control). Whereas congestion control prevents senders from overwhelming the network, flow control prevents the sender from overwhelming the receiver. These guarantees cause delays and generally result in less efficient transmission than UDP.`
 
-To ensure high throughput, web servers can keep a large number of TCP connections open, resulting in high memory usage. <ins>It can be expensive to have a large number of open connections between web server threads and say, a [memcached](https://memcached.org/) server.  [Connection pooling](https://en.wikipedia.org/wiki/Connection_pool) can help in addition to switching to UDP where applicable.</ins>
+To ensure high throughput, web servers can keep a large number of TCP connections open, resulting in high memory usage. <ins>It can be expensive to have a large number of open connections between web server threads and say, a [memcached](https://memcached.org/) server. [Connection pooling](https://en.wikipedia.org/wiki/Connection_pool) can help in addition to switching to UDP where applicable.</ins>
 
 <ins>TCP is useful for applications that require high reliability but are less time critical.  Some examples include web servers, database info, SMTP, FTP, and SSH.</ins>
 
