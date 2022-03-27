@@ -608,6 +608,7 @@ Benchmarking and profiling might point you to the following optimizations.
 
 ##### Tighten up the schema
 
+<ins>
 * MySQL dumps to disk in contiguous blocks for fast access.
 * Use `CHAR` instead of `VARCHAR` for fixed-length fields.
     * `CHAR` effectively allows for fast, random access, whereas with `VARCHAR`, you must find the end of a string before moving onto the next one.
@@ -637,7 +638,7 @@ Benchmarking and profiling might point you to the following optimizations.
 ##### Tune the query cache
 
 * In some cases, the [query cache](https://dev.mysql.com/doc/refman/5.7/en/query-cache.html) could lead to [performance issues](https://www.percona.com/blog/2016/10/12/mysql-5-7-performance-tuning-immediately-after-installation/).
-
+</ins>
 ##### Source(s) and further reading: SQL tuning
 
 * [Tips for optimizing MySQL queries](http://aiddroid.com/10-tips-optimizing-mysql-queries-dont-suck/)
