@@ -862,8 +862,10 @@ Suggestions of what to cache:
 
 <ins>Since you can only store a limited amount of data in cache, you'll need to determine which cache update strategy works best for your use case.</ins>
   
+  <mark>
 #### Cache-aside
-
+  </mark>
+  
 <p align="center">
   <img src="images/ONjORqk.png">
   <br/>
@@ -872,11 +874,14 @@ Suggestions of what to cache:
 
 The application is responsible for reading and writing from storage.  The cache does not interact with storage directly.  The application does the following:
 
+<mark>
 * Look for entry in cache, resulting in a cache miss
 * Load entry from the database
 * Add entry to cache
 * Return entry
-
+</mark>
+  
+  
 ```python
 def get_user(self, user_id):
     user = cache.get("user.{0}", user_id)
@@ -888,10 +893,13 @@ def get_user(self, user_id):
     return user
 ```
 
+<mark>
 [Memcached](https://memcached.org/) is generally used in this manner.
 
 Subsequent reads of data added to cache are fast.  Cache-aside is also referred to as lazy loading.  Only requested data is cached, which avoids filling up the cache with data that isn't requested.
-
+</mark>
+  
+  
 ##### Disadvantage(s): cache-aside
 
 * Each cache miss results in three trips, which can cause a noticeable delay.
@@ -1002,11 +1010,13 @@ Message queues receive, hold, and deliver messages.  If an operation is too slow
 
 The user is not blocked and the job is processed in the background.  During this time, the client might optionally do a small amount of processing to make it seem like the task has completed.  For example, if posting a tweet, the tweet could be instantly posted to your timeline, but it could take some time before your tweet is actually delivered to all of your followers.
 
+`
 **[Redis](https://redis.io/)** is useful as a simple message broker but messages can be lost.
 
 **[RabbitMQ](https://www.rabbitmq.com/)** is popular but requires you to adapt to the 'AMQP' protocol and manage your own nodes.
 
 **[Amazon SQS](https://aws.amazon.com/sqs/)** is hosted but can have high latency and has the possibility of messages being delivered twice.
+`
 
 ### Task queues
 
@@ -1014,9 +1024,9 @@ Tasks queues receive tasks and their related data, runs them, then delivers thei
 
 **[Celery](https://docs.celeryproject.org/en/stable/)** has support for scheduling and primarily has python support.
 
-### Back pressure
+`### Back pressure
 
-If queues start to grow significantly, the queue size can become larger than memory, resulting in cache misses, disk reads, and even slower performance.  [Back pressure](http://mechanical-sympathy.blogspot.com/2012/05/apply-back-pressure-when-overloaded.html) can help by limiting the queue size, thereby maintaining a high throughput rate and good response times for jobs already in the queue.  Once the queue fills up, clients get a server busy or HTTP 503 status code to try again later.  Clients can retry the request at a later time, perhaps with [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff).
+If queues start to grow significantly, the queue size can become larger than memory, resulting in cache misses, disk reads, and even slower performance.  [Back pressure](http://mechanical-sympathy.blogspot.com/2012/05/apply-back-pressure-when-overloaded.html) can help by limiting the queue size, thereby maintaining a high throughput rate and good response times for jobs already in the queue.`  Once the queue fills up, clients get a server busy or HTTP 503 status code to try again later.  Clients can retry the request at a later time, perhaps with [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff).
 
 ### Disadvantage(s): asynchronism
 
